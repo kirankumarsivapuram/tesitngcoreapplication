@@ -23,15 +23,15 @@ jobs:
            dotnet restore --use-current-runtime 
     - name: Build
       run: |
-           #cd samples/aspnetapp/aspnetapp
+           cd samples/aspnetapp/aspnetapp
            dotnet build -c release
     - name: publish
       run: |
-           #cd samples/aspnetapp/aspnetapp
+           cd samples/aspnetapp/aspnetapp
            dotnet publish -c release -o samples/aspnetapp/aspnetapp/website
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: website
-        path: SimpleFeedReader/website/**
+        path: samples/aspnetapp/aspnetapp/website/**
         if-no-files-found: error
