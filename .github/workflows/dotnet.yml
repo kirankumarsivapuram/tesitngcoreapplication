@@ -33,5 +33,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: website
-        path: tesitngcoreapplication/samples/aspnetapp/aspnetapp/samples/aspnetapp/aspnetapp/website/**
+        path: tesitngcoreapplication/samples/aspnetapp/aspnetapp/bin/container/release/net7.0/website/**
         if-no-files-found: error
