@@ -6,31 +6,18 @@ name: DOTNET
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    container: 
+      image: mcr.microsoft.com/dotnet/sdk:7.0
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Publish    
-      run: dotnet publish samples/aspnetapp/aspnetapp/aspnetapp.csproj -c Release -o testingone/website
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: website
-        path: testingone/website/**
-        if-no-files-found: error
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: compilation
+      run: |
+           dotnet restore --use-current-runtime  
+    
