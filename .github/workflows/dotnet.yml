@@ -28,10 +28,10 @@ jobs:
     - name: publish
       run: |
            cd samples/aspnetapp/aspnetapp
-           dotnet publish -c release -o samples/aspnetapp/aspnetapp/website
+           dotnet publish -c release -o samples/aspnetapp/website
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
       with:
         name: website
-        path: tesitngcoreapplication/tesitngcoreapplication/samples/aspnetapp/aspnetapp/samples/aspnetapp/aspnetapp/website/**
+        path: tesitngcoreapplication/tesitngcoreapplication/samples/aspnetapp/bin/container/release/net7.0/website/**
         if-no-files-found: error
