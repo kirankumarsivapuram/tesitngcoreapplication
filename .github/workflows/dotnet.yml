@@ -20,5 +20,9 @@ jobs:
     - name: compilation
       run: |
            cd samples/aspnetapp/aspnetapp
-           dotnet restore --use-current-runtime  
+           dotnet restore --use-current-runtime 
+    - name: Build
+      run: |
+           cd samples/aspnetapp/aspnetapp
+           dotnet build -c release
     
