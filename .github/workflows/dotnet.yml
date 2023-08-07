@@ -25,4 +25,7 @@ jobs:
       run: |
            cd samples/aspnetapp/aspnetapp
            dotnet build -c release
-    
+    - name: publish
+      run: |
+           cd samples/aspnetapp/aspnetapp
+           dotnet publish -c release -o samples/aspnetapp/aspnetapp/website
