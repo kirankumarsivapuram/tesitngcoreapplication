@@ -13,7 +13,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container: 
-      image: mcr.microsoft/azure-cli
+      image: mcr.microsoft.com/azure-cli
 
     steps:
     - uses: actions/checkout@v3           
