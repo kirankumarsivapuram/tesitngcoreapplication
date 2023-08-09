@@ -13,25 +13,20 @@ jobs:
 
     runs-on: ubuntu-latest
     container: 
-      image: mcr.microsoft.com/dotnet/sdk:7.0
+      image: rancher/dind:latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: compilation
+    - name: install azcli
       run: |
-           cd samples/aspnetapp/aspnetapp
-           dotnet restore --use-current-runtime 
-    - name: Build
+        apt-get update
+        apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+        mkdir -p /etc/apt/keyrings
+        curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null 
+        chmod go+r /etc/apt/keyrings/microsoft.gpg
+        apt-get update
+        apt-get install azure-cli
+    - name: az login
       run: |
-           cd samples/aspnetapp/aspnetapp
-           dotnet build -c release
-    - name: publish
-      run: |
-           cd samples/aspnetapp/aspnetapp
-           dotnet publish -c release -o website
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: website
-        path: samples/aspnetapp/aspnetapp/website/**
-        if-no-files-found: error
+        az login --service-principal -u ${{secrets.user}} -p ${{secrets.password}} -t "5461eb53-e0fd-4320-92ff-c6efe1fe91e9"    
+    
