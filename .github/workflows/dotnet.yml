@@ -13,7 +13,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container: 
-      image: kirankumarsivapuarm/base_image:1.0
+      image: kirankumarsivapuram/base_image:1.0             
 
     steps:
     - uses: actions/checkout@v3           
