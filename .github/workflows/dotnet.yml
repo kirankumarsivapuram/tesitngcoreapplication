@@ -12,6 +12,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    continue-on-error: false
     container: 
       image: kirankumarsivapuram/base_image:1.0             
 
@@ -24,4 +25,23 @@ jobs:
       run: |
         cd ./samples/aspnetapp/
         docker build . -t demo_image:v1.0
-        
+    - name: set subscription
+      run: az account set --subscription "e64d2b7e-f9cf-4177-afb5-b4eb654ca3cb"
+    - name: azure container registry login
+      run: |
+        az acr login -n "testacrpoc08112023" -u ${{secrets.user}} -p ${{secrets.password}}
+    - name: create docker tag
+      shell: pwsh
+      run: |
+        $BuildId= ${{github.run_id}}
+        $ImageTag=Get-Date -Format "MM-dd-yyyy_$BuildId"
+        echo "$ImageTag"
+        Write-Host "$ImageTag"
+        $registryname="testacrpoc08112023"
+        $imagename="demo_image:" + "$ImageTag"
+        $acrfqdn="$registryname.azurecr.io/$imagename"
+    - name: az container registry deployment
+      shell: pwsh
+      run: |
+        docker tag demo_image:v1.0 $acrfqdn
+        docker images
