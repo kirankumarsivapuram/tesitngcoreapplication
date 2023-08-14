@@ -24,7 +24,7 @@ jobs:
     - name: build docker image
       run: |
         cd ./samples/aspnetapp/
-        docker build . -t demo_image:v1.0
+        docker build . -t demo_image
     - name: set subscription
       run: az account set --subscription "e64d2b7e-f9cf-4177-afb5-b4eb654ca3cb"
     - name: azure container registry login
@@ -40,8 +40,6 @@ jobs:
         $registryname="testacrpoc08112023"
         $imagename="demo_image:" + "$ImageTag"
         $acrfqdn="$registryname.azurecr.io/$imagename"
-    - name: az container registry deployment
-      shell: pwsh
-      run: |
-        docker tag demo_image:v1.0 $acrfqdn
+        write-output "az container registry deployment"        
+        docker tag demo_image $acrfqdn
         docker images
