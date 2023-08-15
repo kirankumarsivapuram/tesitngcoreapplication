@@ -43,3 +43,8 @@ jobs:
         write-output "az container registry deployment"        
         docker tag demo_image $acrfqdn
         docker images
+        write-host "pushing to acr"
+        docker push $acrfqdn
+        write-host "logging out of azure"
+        az logout
+        
