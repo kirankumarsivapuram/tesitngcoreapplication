@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     container: 
-      image: kirankumarsivapuram/base_image:1.0             
+      image: kirankumarsivapuram/base_image:2.0             
 
     steps:
     - uses: actions/checkout@v3           
@@ -34,7 +34,8 @@ jobs:
       shell: pwsh
       run: |
         $BuildId= ${{github.run_id}}
-        $ImageTag=Get-Date -Format "MM-dd-yyyy_$BuildId"
+        #$ImageTag=Get-Date -Format "MM-dd-yyyy"
+        $ImageTag= "v1.0"
         echo "$ImageTag"
         Write-Host "$ImageTag"
         $registryname="testacrpoc08112023"
@@ -47,4 +48,5 @@ jobs:
         docker push $acrfqdn
         write-host "logging out of azure"
         az logout
-        
+    - name: push file into aks
+      run: echo "hello world"
