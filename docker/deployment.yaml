@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: testacrpoc08112023.azurecr.io/demo_image:v1.0
+        image: testacrpoc08112023.azurecr.io/demo_image:DOCKER_TAG
         ports:
         - containerPort: 8100
