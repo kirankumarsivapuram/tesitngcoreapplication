@@ -25,6 +25,7 @@ jobs:
       run: |
         cd ./samples/aspnetapp/
         docker build . -t demo_image
+        cd ..
     - name: set subscription
       run: az account set --subscription "e64d2b7e-f9cf-4177-afb5-b4eb654ca3cb"
     - name: azure container registry login
@@ -34,13 +35,14 @@ jobs:
       shell: pwsh
       run: |
         $BuildId= ${{github.run_id}}
-        #$ImageTag=Get-Date -Format "MM-dd-yyyy"
-        $ImageTag= "v1.0"
+        $ImageTag=Get-Date -Format "MM-dd-yyyy_$BuildId"
+        #$ImageTag= "v1.0"
         echo "$ImageTag"
         Write-Host "$ImageTag"
         $registryname="testacrpoc08112023"
-        $imagename="demo_image:" + "$ImageTag"
-        $acrfqdn="$registryname.azurecr.io/$imagename"
+        #$imagename="demo_image:" + "$ImageTag"
+        $imagename="demo_image:"
+        $acrfqdn="$registryname.azurecr.io/$imagename" + "$ImageTag"        
         write-output "az container registry deployment"        
         docker tag demo_image $acrfqdn
         docker images
@@ -48,5 +50,10 @@ jobs:
         docker push $acrfqdn
         write-host "logging out of azure"
         az logout
+        
     - name: push file into aks
-      run: echo "hello world"
+      run: |
+        $BuildId= ${{github.run_id}}
+        $DOCKER_TAG=Get-Date -Format "MM-dd-yyyy_$BuildId"
+        sed -i $#DOCKER_TAG#$DOCKER_TAG ./docker/deployment.yaml
+        cat ./docker/deployment.yaml
