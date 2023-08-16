@@ -56,5 +56,5 @@ jobs:
       run: |
         $BuildId= "${{github.run_id}}"       
         $DOCKER_TAG=Get-Date -Format "MM-dd-yyyy_$BuildId"
-        sed -i $#DOCKER_TAG#$DOCKER_TAG ./docker/deployment.yaml
+        sed -i $#DOCKER_TAG#$DOCKER_TAG# ./docker/deployment.yaml
         cat ./docker/deployment.yaml
